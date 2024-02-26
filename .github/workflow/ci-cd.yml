@@ -1,0 +1,47 @@
+name: Node.js CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14' # Adjust the version to your Node.js version
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Application
+        run: npm run build
+
+      - name: Run Tests
+        run: npm test
+
+      - name: Install Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
+
+      - name: Login to Heroku
+        run: heroku login -i
+
+      - name: Deploy to Production
+        run: |
+          heroku create
+          git push heroku main
+
+      - name: Notify on Failure
+        if: failure()
+        run: echo "Workflow Failed, Check logs for details"
