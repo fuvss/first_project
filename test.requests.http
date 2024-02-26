@@ -1,0 +1,26 @@
+### Create a new user
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "age": 30
+}
+
+### Retrieve all users
+GET http://localhost:5000/users
+
+### Retrieve a user by ID
+GET http://localhost:5000/users/65db90a9c9c139d904ce0e59
+
+### Update a user by ID
+PUT http://localhost:5000/users/65db90a9c9c139d904ce0e59
+Content-Type: application/json
+
+{
+    "name": "Updated Name",
+    "age": 40
+}
+
+### Delete a user by ID
+DELETE http://localhost:5000/users/65db90a9c9c139d904ce0e59
